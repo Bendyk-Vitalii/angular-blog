@@ -1,3 +1,4 @@
+import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -6,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { PostsPageComponent } from './posts-page/posts-page.component';
+import { PostComponent } from './shared/components/post/post.component';
 
 
 @NgModule({
@@ -13,11 +15,13 @@ import { PostsPageComponent } from './posts-page/posts-page.component';
     AppComponent,
     MainLayoutComponent,
     HomePageComponent,
-    PostsPageComponent
+    PostsPageComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
