@@ -5,6 +5,10 @@
     {{ error }}
   </div>
 
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
+  </div>
+
   <div
     class="form-control"
     [ngClass]="{
@@ -18,8 +22,13 @@
       class="validation"
       *ngIf="!form.get('email')?.touched && form.get('email')?.invalid"
     >
-      <small *ngIf="!form.get('email')?.errors"> please write </small>
-      <small *ngIf="form.get('email')?.status === 'INVALID' && form.get('email')?.touched">
+      <small *ngIf="!!form.get('email')?.touched && !form.get('email')?.dirty">
+        please write something
+      </small>
+      <small
+        *ngIf="
+          form.get('email')?.status === 'INVALID' && form.get('email')?.touched
+        ">
         invalid email
       </small>
     </div>
@@ -33,17 +42,22 @@
   >
     <label for="password">password:</label>
     <input type="password" id="password" formControlName="password" />
-    <div
-      class="validation"
-      *ngIf="form.get('password')?.value.length && form.get('password')?.status === 'INVALID'"
-    >
-      <small>error</small>
-      <small *ngIf="form.get('password')?.value.length < 6"
-        >Your password must be minimum 6 symbols</small
+    <div class="validation">
+      <small
+        *ngIf="
+          !form.get('password')?.value.length && form.get('password')?.touched
+        "
       >
+        error
+      </small>
+      <small
+        *ngIf="
+          form.get('password')?.dirty && form.get('password')?.value.length < 6
+        "
+        >Your password must be minimum 6 symbols
+      </small>
     </div>
   </div>
-
   <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
     sign in
   </button>
