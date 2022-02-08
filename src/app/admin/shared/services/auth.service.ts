@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap, throwError,  Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
 
   public error$: Subject<string> = new Subject<string>()
