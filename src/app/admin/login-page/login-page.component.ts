@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router, Params} from '@angular/router';
 import { AuthService } from './../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,13 +12,21 @@ import { User } from '../../shared/interfaces';
 export class LoginPageComponent implements OnInit {
   form!: FormGroup;
   submitted:boolean = false;
+  message: string | undefined;
 
   constructor(
     public auth: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
     ) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['loginAgain']) {
+        this.message = "Please, write login&password"
+      }
+    })
+
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -29,14 +37,15 @@ export class LoginPageComponent implements OnInit {
   }
 
   submit() {
-    console.dir(this.form.get('email'));
+    //this.form.get('email')?.valueChanges(value => console.log(value));
+    //console.dir(this.form.get('email')?.valueChanges(value => console.log(value)))
     if (this.form.invalid) {
       return;
     }
 
     this.submitted = true;
 
-    const user: User = { 
+    const user: User = {
       email: this.form.value.email,
       password: this.form.value.password,
       returnSecureToken: true,
