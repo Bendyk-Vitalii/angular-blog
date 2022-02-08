@@ -4,17 +4,16 @@
   <div
     class="form-control"
     [ngClass]="{
-      invalid: form.get('title')?.touched && form.get('title')?.invalid
+      invalid: form.get('title')?.touched && form.get('title')?.status === 'INVALID'
     }"
   >
     <label for="title">Post name:</label>
     <input type="title" type="text" id="title" formControlName="title" />
-
     <div
       class="validation"
-      *ngIf="form.get('title')?.touched && form.get('title')?.invalid"
+      *ngIf="form.get('title')?.touched && form.get('title')?.status === 'INVALID'"
     >
-      <small *ngIf="!!form.get('title')?.touched">
+      <small *ngIf="form.get('title')?.touched && form.get('title')?.status === 'INVALID'">
         please write post name
       </small>
     </div>
@@ -22,22 +21,22 @@
 
   <div class="form-control">
     <label>Post text:</label>
+    <quill-editor formControlName="text"></quill-editor>
   </div>
 
   <div
     class="form-control"
     [ngClass]="{
-      invalid: form.get('author')?.touched && form.get('author')?.invalid
+      invalid: form.get('author')?.touched && form.get('author')?.status === 'INVALID'
     }"
   >
     <label for="author">Post author:</label>
     <input type="author" type="text" id="author" formControlName="author" />
 
-    <div
-      class="validation"
-      *ngIf="!form.get('author')?.touched && form.get('author')?.invalid"
+    <div class="validation"
+    *ngIf="form.get('author')?.touched && form.get('author')?.status === 'INVALID'"
     >
-      <small *ngIf="!!form.get('author')?.touched && !form.get('author')?.dirty">
+      <small *ngIf="form.get('author')?.touched && !form.get('author')?.dirty">
         please write post author
       </small>
     </div>

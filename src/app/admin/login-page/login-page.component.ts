@@ -24,6 +24,8 @@ export class LoginPageComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = "Please, write login&password"
+      } else if (params['authFailed']) {
+        this.message = "Please< write login & password again"
       }
     })
 
@@ -37,8 +39,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   submit() {
-    //this.form.get('email')?.valueChanges(value => console.log(value));
-    //console.dir(this.form.get('email')?.valueChanges(value => console.log(value)))
     if (this.form.invalid) {
       return;
     }
