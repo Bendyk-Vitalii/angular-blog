@@ -1,4 +1,4 @@
-import {ActivatedRoute, Router, Params} from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from './../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,23 +11,23 @@ import { User } from '../../shared/interfaces';
 })
 export class LoginPageComponent implements OnInit {
   form!: FormGroup;
-  submitted:boolean = false;
+  submitted: boolean = false;
   message: string | undefined;
 
   constructor(
     public auth: AuthService,
     private router: Router,
     private route: ActivatedRoute
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
-        this.message = "Please, write login&password"
+        this.message = 'Please, write login&password';
       } else if (params['authFailed']) {
-        this.message = "Please< write login & password again"
+        this.message = 'Please< write login & password again';
       }
-    })
+    });
 
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -51,12 +51,15 @@ export class LoginPageComponent implements OnInit {
       returnSecureToken: true,
     };
 
-    this.auth.login(user).subscribe(() => {
-      this.form.reset();
-      this.router.navigate(['/admin', 'dashboard']);
-      this.submitted = false
-    }, () => {
-      this.submitted = false
-    });
+    this.auth.login(user).subscribe(
+      () => {
+        this.form.reset();
+        this.router.navigate(['/admin', 'dashboard']);
+        this.submitted = false;
+      },
+      () => {
+        this.submitted = false;
+      }
+    );
   }
 }

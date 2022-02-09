@@ -2,13 +2,14 @@ import { environment } from './../../../../environments/environment';
 import { FbAuthResponse, User } from './../../../shared/interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, tap, throwError,  Subject } from 'rxjs';
+import { Observable, tap, throwError, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
-export class AuthService {
+@Injectable({ providedIn: 'root' })
 
-  public error$: Subject<string> = new Subject<string>()
+export class AuthService {
+  
+  public error$: Subject<string> = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -26,10 +27,9 @@ export class AuthService {
     return this.http
       .post(
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
-        user)
-      .pipe(tap(this.setToken),
-      catchError(this.handleError.bind(this))
+        user
       )
+      .pipe(tap(this.setToken), catchError(this.handleError.bind(this)));
   }
 
   logout() {
@@ -40,21 +40,21 @@ export class AuthService {
     return !!this.token;
   }
 
-  private handleError(error: HttpErrorResponse){
-    const  { message } = error.error.error
+  private handleError(error: HttpErrorResponse) {
+    const { message } = error.error.error;
 
     switch (message) {
       case 'INVALID_EMAIL':
-      this.error$.next('Invalid email')
-      break
+        this.error$.next('Invalid email');
+        break;
       case 'INVALID_PASSWORD':
-        this.error$.next('Invalid password')
-        break
-        case 'EMAIL_NOT_FOUND':
-          this.error$.next('This email not found')
-          break
+        this.error$.next('Invalid password');
+        break;
+      case 'EMAIL_NOT_FOUND':
+        this.error$.next('This email not found');
+        break;
     }
-    return throwError(error)
+    return throwError(error);
   }
 
   private setToken(response: any) {

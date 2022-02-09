@@ -6,20 +6,26 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', component: MainLayoutComponent, children: [
-      {path: '', redirectTo: '/', pathMatch: 'full'},
-      {path: '', component: HomePageComponent},
-      {path: 'post/:id', component: PostPageComponent}
-    ]
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: '', redirectTo: '/', pathMatch: 'full' },
+      { path: '', component: HomePageComponent },
+      { path: 'post/:id', component: PostPageComponent },
+    ],
   },
   {
-    path: 'admin', loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule)
-  }
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((x) => x.AdminModule),
+  },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

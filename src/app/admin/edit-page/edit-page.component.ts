@@ -12,7 +12,6 @@ import { switchMap, Subscription } from 'rxjs';
   styleUrls: ['./edit-page.component.scss'],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
-
   form!: FormGroup;
   post!: Post;
   submitted = false;
@@ -42,9 +41,9 @@ export class EditPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      if(this.updateSub) {
-        this.updateSub.unsubscribe()
-      }
+    if (this.updateSub) {
+      this.updateSub.unsubscribe();
+    }
   }
 
   submit() {
@@ -59,7 +58,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       title: this.form.value.title,
     }).subscribe(() => {
       this.submitted = false;
-      this.alert.success("Post was updated")
+      this.alert.success('Post was updated');
     });
   }
 }
